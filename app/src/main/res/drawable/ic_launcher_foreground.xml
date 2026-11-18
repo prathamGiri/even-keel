@@ -1,0 +1,12 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
+    <!-- sail -->
+    <path android:fillColor="#4FD1A5" android:pathData="M55,28 L55,58 L75,58 Z"/>
+    <path android:fillColor="#A8F0D6" android:pathData="M52,34 L52,58 L37,58 Z"/>
+    <!-- mast -->
+    <path android:fillColor="#E8F1EF" android:pathData="M52.5,26 h2.5 v36 h-2.5 z"/>
+    <!-- hull -->
+    <path android:fillColor="#E8F1EF" android:pathData="M33,62 L75,62 L69,71 L39,71 Z"/>
+    <!-- waves -->
+    <path android:fillColor="#4FD1A5" android:pathData="M28,76 q6.5,-4 13,0 t13,0 t13,0 t13,0 v4 q-6.5,-4 -13,0 t-13,0 t-13,0 t-13,0 z"/>
+    <path android:fillColor="#2E8C70" android:pathData="M34,83 q5,-3 10,0 t10,0 t10,0 t10,0 v3.5 q-5,-3 -10,0 t-10,0 t-10,0 t-10,0 z"/>
+</vector>

@@ -1,0 +1,67 @@
+{
+  "name": "Even Keel",
+  "slug": "even-keel",
+  "tagline": "Never get ambushed by a yearly bill again: exactly how much to set aside this payday for every lumpy expense.",
+  "problem": "Monthly bills are easy to budget. Car registration, annual insurance premiums, subscriptions billed yearly, holidays, and semi-annual bills arrive as $300-$5,000 surprises that make budgets feel pointless. One Reddit poster said random $3k-$5k expenses wreck an otherwise predictable budget. The standard fix is sinking funds (list each bill, divide by the paychecks left before it's due). Today people do that math in spreadsheets or pay for YNAB, and one r/ynab user said YNAB has no good way to handle sinking funds unless you create an account per category. Dedicated apps are freemium or want bank logins.",
+  "evidence": [
+    {
+      "source": "https://www.thecooldown.com/?p=793578",
+      "note": "Write-up of a Reddit thread: OP's regular budget is predictable but random $3k-$5k expenses make budgeting 'feel pointless'."
+    },
+    {
+      "source": "https://reddit.birdcat.cafe/r/ynab/comments/1isgpkh/if_you_were_to_update_ynab_what_feature_you_wanna",
+      "note": "r/ynab user: YNAB doesn't have a good way to save for sinking funds or big purchases unless you create an account for each category."
+    },
+    {
+      "source": "https://gummysearch.com/tools/best-products/budgeting-apps/",
+      "note": "Reddit budgeting threads lean toward free custom spreadsheets (no bank connections). r/personalfinance has shared dozens of homemade sinking-fund sheets, which shows demand for the method without a subscription."
+    },
+    {
+      "source": "https://waypointbudget.com/blog/common-expenses-canadians-overlook",
+      "note": "Semi-annual and annual bills are commonly overlooked because they appear only once or twice a year."
+    },
+    {
+      "source": "https://joingerald.com/learn/saving--investing/sinking-fund-apps-annual-bills",
+      "note": "Recommended method is per-paycheck math (divide by 26 fortnights, round up for a buffer). People do this by hand. Source is a vendor blog, so read with caution."
+    },
+    {
+      "source": "https://dev.to/shahmeer/why-people-are-quietly-quitting-ynab-and-what-they-are-switching-to-1k9g",
+      "note": "Users leaving YNAB over cost ($14.99/mo) and complexity want something lighter."
+    }
+  ],
+  "target_users": "Salaried or hourly workers paid weekly, biweekly, semi-monthly or monthly who keep getting hit by non-monthly bills. Also people who use the sinking-fund method by hand or in spreadsheets and don't want a full budgeting app or to link a bank.",
+  "core_features": [
+    "Lumpy-bill list: add an irregular expense with name, emoji/icon, amount, next due date, and repeat rule (yearly, every 6 months, quarterly, every N months, or one-off). Includes quick-add presets: car registration, car insurance, Christmas/gifts, annual subscriptions, property tax, vet/annual checkup, back-to-school.",
+    "Pay schedule engine: user sets pay frequency (weekly, biweekly, semi-monthly on two chosen days, monthly) and next payday. For each bill the app computes paychecks remaining before the due date and the exact set-aside per paycheck = (amount - already saved) / paychecks remaining, rounded up to the nearest dollar.",
+    "Payday checklist (the hook): on payday, one screen lists every fund with this paycheck's amount and a big total ('Move $142 to savings today'). The user taps each line or 'Mark all moved' to log the contributions, with haptic feedback. Late or skipped paydays carry over automatically and per-paycheck amounts go up to catch up.",
+    "Fund status and payout: each fund shows a progress bar (saved/target), on-track/behind/ready badges, and the due countdown. When a bill is due the user taps 'Paid it', enters the actual amount, and any surplus or shortfall is noted. The fund resets toward the next occurrence using the repeat rule, and over/under is optionally rolled into the next cycle.",
+    "Ouch-month calendar: 12-month heatmap/bar view of when lumpy bills land and how much each month would hit without smoothing, next to the flat per-month amount with smoothing. Tapping a month shows its bills.",
+    "True monthly cost and share: a headline 'Your lumpy bills really cost $X/month ($Y per paycheck)'. Share-text exports a plain summary of funds and this payday's transfers through the native bridge. JSON backup export/import goes through copy/paste text."
+  ],
+  "screens": [
+    "Onboarding/Pay setup: pick pay frequency, next payday (semi-monthly days if relevant), currency symbol; optional preset bill picker to seed the list quickly.",
+    "Home/Dashboard: hero card with 'Next payday in N days: set aside $X', true monthly cost, overall funded %, and a list of fund cards sorted by due date with progress bars and status badges.",
+    "Payday Checklist: this paycheck's per-fund amounts with checkboxes, running total, 'Mark all moved', and a note when an amount went up due to catch-up.",
+    "Add/Edit Bill: name, icon, amount, next due date, repeat rule, 'already saved' starting balance, notes; live preview of per-paycheck amount as the user types.",
+    "Fund Detail: progress ring, contribution history list (date, amount), due countdown, 'Paid it' flow with actual-amount entry, edit/delete.",
+    "Calendar (Ouch Months): 12-month bar chart of unsmoothed lump totals vs flat smoothed line; tap a month for its bill list.",
+    "Settings: pay schedule edit, currency, rounding preference (exact/nearest $1/nearest $5), export/import JSON, share summary, reset data."
+  ],
+  "data_model": "localStorage key 'evenkeel.v1' holds one JSON object: { settings: { currency, payFrequency: 'weekly'|'biweekly'|'semimonthly'|'monthly', nextPayday: 'YYYY-MM-DD', semiMonthlyDays: [1,15], rounding: 'exact'|'1'|'5', onboarded: bool }, funds: [ { id, name, icon, amount, nextDue: 'YYYY-MM-DD', repeat: { type: 'yearly'|'months'|'once', every: number }, saved: number, notes, createdAt } ], contributions: [ { id, fundId, date, amount, paydayKey } ], payments: [ { id, fundId, date, budgeted, actual } ], paydaysCompleted: ['YYYY-MM-DD'] }. All date math uses local dates and no network calls.",
+  "design": {
+    "bg": "#0F1A1C",
+    "accent": "#4FD1A5",
+    "vibe": "Calm nautical 'even keel' theme: deep teal-charcoal background, mint-green accent for on-track, warm amber (#F5B95C) for behind, coral (#FF7A6B) for due-soon/shortfall. Rounded cards, generous spacing, large tabular numerals for money, subtle wave motif in the hero card. Progress bars fill like a water line. Bottom tab bar (Home, Payday, Calendar, Settings) with a floating + button. Satisfying check animation and vibration when marking transfers moved."
+  },
+  "test_scenarios": [
+    "First run: choose biweekly pay with next payday 7 days from today, add 'Car insurance' $1,200 due in exactly 6 months, yearly. Verify the per-paycheck amount equals ceil(1200 / paychecks between now and due date) (about 13 paychecks gives $93) and the Home hero shows that total.",
+    "Add a second bill 'Registration' $180 due in 3 weeks with $0 saved. Verify it shows 'behind'/due-soon styling, a high per-paycheck amount (about $90 over 2 paychecks), and the Payday total is the sum of both funds.",
+    "Open Payday Checklist, tick one fund and then 'Mark all moved'. Verify contributions are logged, fund saved balances and progress bars go up, the payday is marked complete, and the hero now points to the next payday.",
+    "Skip a payday (set nextPayday in the past, or reopen after it passes without marking). Verify the app rolls forward to the correct upcoming payday and recalculates higher catch-up amounts with a visible note.",
+    "On a fund that is due, tap 'Paid it' and enter an actual amount $20 less than budgeted. Verify the payment is recorded, the yearly fund's nextDue moves forward one year, saved resets (with the $20 surplus carried if that option is on), and a one-off fund is archived or removed.",
+    "Switch pay frequency from biweekly to semi-monthly (1st and 15th). Verify all per-paycheck amounts recalculate correctly and the next payday date updates.",
+    "Open the Calendar. Verify months with bills show bars equal to the sum of the bills due that month, the smoothed monthly line equals the sum of (amount / months between occurrences), and tapping a month lists its bills.",
+    "Reload the app or WebView. Verify all funds, contributions and settings persist from localStorage. Export JSON, reset data, import the JSON, and verify the state is fully restored.",
+    "Use Share summary and verify the native share bridge receives readable text with each fund, its progress, and this payday's transfer total. Verify there are no network requests at any point."
+  ]
+}
